@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <title>急救訓練管理平台｜登入</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap 5 CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
+        rel="stylesheet" 
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" 
+        crossorigin="anonymous">
+  <link rel="stylesheet" href="../CSS/login.css">
+</head>
+<body>
+
+  <div id="loginCard" class="text-center">
+    <img src="logo.png" alt="Logo" class="logo">
+    <h4 class="mb-4">急救訓練管理平台</h4>
+    <div id="errorMessage" class="text-danger mb-3"></div>
+    <div id="successMessage" class="text-success mb-3"></div>
+    <input id="studentIdInput" class="form-control mb-3" placeholder="帳號">
+    <input id="passwordInput" type="password" class="form-control mb-4" placeholder="密碼">
+    <button id="loginBtn" class="btn btn-primary w-100 mb-2">登入</button>
+    <button id="logoutBtn" class="btn btn-outline-secondary w-100" style="display:none;">登出</button>
+    <button id="testBtn" class="btn btn-warning w-100 mt-2">測試資料庫</button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" 
+          integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" 
+          crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="../JS/config.js"></script>
+  <script src="../JS/common.js"></script>
+  <script src="../JS/login.js"></script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+@import url('./base.css');
+
+/* enterScore 特定樣式 */
+label {
+    display: block;
+    text-align: left;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+input[type="text"],
+input[type="password"],
+input[type="number"] {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2em;
+    font-weight: bold;
+    width: 100%;
+}
+button:hover {
+    background-color: #45a049;
+}
+#errorMessage {
+    color: red;
+    margin-top: 20px;
+}
+#successMessage {
+    color: green;
+    margin-top: 20px;
+}

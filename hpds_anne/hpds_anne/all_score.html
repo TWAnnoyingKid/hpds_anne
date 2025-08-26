@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <title>急救訓練管理平台｜所有成績</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
+        rel="stylesheet" 
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" 
+        crossorigin="anonymous">
+  <link rel="stylesheet" href="../CSS/navbar.css">
+  <link rel="stylesheet" href="../CSS/all_score.css">
+  </head>
+<body>
+  <!-- 導航欄將由 navbar.js 動態載入 -->
+
+  <div id="mainContainer">
+    <h2>所有學生成績一覽</h2>
+    
+    <!-- 搜尋區域 -->
+    <div class="row mb-3">
+      <div class="col-md-3">
+        <select id="searchPermission" class="form-select">
+          <option value="">全部</option>
+          <option value="nurse">護理師</option>
+          <option value="snurse">專科護理師</option>
+          <option value="student">護生</option>
+          <option value="teacher">教師</option>
+          <option value="ta">管理員</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <button id="searchBtn" class="btn btn-primary">搜尋</button>
+      </div>
+    </div>
+    
+    <div class="d-flex align-items-center mb-3">
+      <button id="refreshBtn" class="btn btn-success me-2">重新整理</button>
+      <button id="toggleSort" class="btn btn-secondary me-2">成績降序</button>
+      <button id="exportAllBtn" class="btn btn-warning me-2" style="display:none;">匯出所有成績</button>
+      <div id="errorMessage" class="text-danger"></div>
+    </div>
+    <div class="table-responsive" style="max-height:70vh; overflow:auto;">
+      <table id="scoreTable" class="table table-striped table-bordered">
+        <thead class="table-primary">
+          <tr>
+            <th>學號</th><th>姓名</th><th>成績</th><th>錯題</th><th>用時</th>
+            <th>Q1</th><th>Q2</th><th>Q3</th><th>Q4</th><th>Q5</th>
+            <th>Q6</th><th>Q7</th><th>Q8</th><th>Q9</th><th>Q10</th>
+            <th>Q11</th><th>Q12</th><th>Q13</th><th>Q14</th><th>Q15</th><th>Q16</th>
+            <th>答題日期</th><th>操作</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Bootstrap & jQuery -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" 
+          integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" 
+          crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="../JS/config.js"></script>
+  <script src="../JS/common.js"></script>
+  <script src="../JS/navbar.js"></script>
+  <script src="../JS/all_score.js"></script>
+  <script>
+    // 初始化導航欄
+    document.addEventListener('DOMContentLoaded', function() {
+        initNavbar({ currentPage: 'all_score.html' });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f8ff;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+}
+h1 {
+    color: #333;
+}
+.inputField, .selectField {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    font-size: 1.2em;
+}
+#registerButton {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+#errorMessage, #successMessage {
+    display: none;
+}
+#errorMessage {
+    color: red;
+}
+#successMessage {
+    color: green;
+}

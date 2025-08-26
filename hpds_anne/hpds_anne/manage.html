@@ -1,0 +1,185 @@
+<!-- 2025-06-27  全量檔 -->
+<!DOCTYPE html>
+<html lang="zh-TW">
+    <head>
+        <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>急救訓練管理平台｜用戶管理</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
+              rel="stylesheet" 
+              integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" 
+              crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="../CSS/navbar.css">
+        <link rel="stylesheet" href="../CSS/manage.css">
+        <link rel="stylesheet" href="../CSS/password-toggle.css">
+    </head>
+    <body>
+        <!-- 導航欄將由 navbar.js 動態載入 -->
+
+        <div id="mainContainer">
+        <h2 class="mb-3">用戶資料管理系統</h2>
+
+        <!-- 操作按鈕區 -->
+        <div class="d-flex justify-content-start mb-3 gap-2">
+        <button id="toggleAddForm" class="btn btn-primary">
+            ➕ 新增用戶
+        </button>
+        <button id="toggleSearchForm" class="btn btn-info">
+            🔍 搜尋用戶
+        </button>
+
+
+
+        </div>
+
+        <!-- 動態表單區塊 (隱藏) -->
+        <div id="dynamicFormSection" class="add-user-section mb-4">
+        <div class="p-3 border rounded bg-light">
+            <!-- 新增用戶表單 -->
+            <div id="addFormContent" style="display: none;">
+                <h5 class="mb-3 text-primary">
+                    👤 新增用戶資料
+                </h5>
+                <form id="addForm" class="row g-3">
+                <div class="col-md-2"><input id="new_id" class="form-control" placeholder="學號" required></div>
+                <div class="col-md-2"><input id="new_name" class="form-control" placeholder="姓名" required></div>
+                <div class="col-md-2"><input id="new_password" type="password" class="form-control" placeholder="密碼" required></div>
+                <div class="col-md-2"><select id="new_permission" class="form-select">
+                    <option value="nurse">護理師</option><option value="snurse">專科護理師</option>
+                    <option value="student">護生</option><option value="teacher">教師</option><option value="ta">管理員</option>
+                </select></div>
+                <div class="col-md-2"><select id="new_gender" class="form-select"><option value="Male">Male</option><option value="Female">Female</option></select></div>
+                <div class="col-md-2">
+                    <button type="button" id="addBtn" class="btn btn-success w-100">新增</button>
+                </div>
+                </form>
+            </div>
+
+            <!-- 搜尋用戶表單 -->
+            <div id="searchFormContent" style="display: none;">
+                <h5 class="mb-3 text-info">
+                    🔍 搜尋用戶
+                </h5>
+                <form id="searchForm" class="row g-3">
+                <div class="col-md-4">
+                    <input id="search_name" class="form-control" placeholder="輸入姓名">
+                </div>
+                <div class="col-md-4">
+                    <select id="search_permission" class="form-select">
+                        <option value="">請選擇職稱</option>
+                        <option value="nurse">護理師</option>
+                        <option value="snurse">專科護理師</option>
+                        <option value="student">護生</option>
+                        <option value="teacher">教師</option>
+                        <option value="ta">管理員</option>
+                    </select>
+                </div>
+                <div class="col-md-4 d-flex align-items-end">
+                    <button type="button" id="searchBtn" class="btn btn-success w-100">搜尋</button>
+                </div>
+                </form>
+            </div>
+        </div>
+        </div>
+
+        <!-- 匯出全部 -->
+        <div class="d-flex justify-content-end mb-2">
+        <button id="testManage" class="btn btn-info btn-sm me-2">測試連線</button>
+        <button id="exportAll" class="btn btn-warning btn-sm">匯出全部</button>
+        </div>
+
+        <div class="table-responsive">
+            <table id="userTable" class="table table-bordered align-middle">
+                <thead class="table-primary"><tr><th>學號</th><th>姓名</th><th>密碼</th><th>職稱</th><th>性別</th><th class="text-center">操作</th></tr></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        </div>
+
+        <!-- ═ 編輯 Modal ═ -->
+        <div class="modal fade" id="editModal" tabindex="-1"><div class="modal-dialog modal-lg">
+        <form id="editForm" class="modal-content">
+        <div class="modal-header"><h5 class="modal-title">編輯用戶資料</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
+        <div class="modal-body"><div class="row g-3">
+        <!-- 學號欄位 (只顯示，不可修改) -->
+        <div class="col-md-6"><label for="edit_student_id">學號</label><input id="edit_student_id" name="student_id" class="form-control" readonly></div>
+        <div class="col-md-6"><label for="edit_password">密碼 <small class="text-muted">(留空則不更改密碼)</small></label>
+            <div class="input-group">
+                <input id="edit_password" name="password" class="form-control" type="password" placeholder="留空則不更改密碼">
+                <button class="btn btn-outline-secondary toggle-password" type="button">
+                    <i class="bi bi-eye"></i>
+                </button>
+            </div>
+        </div>
+        <!-- 基本 -->
+        <div class="col-md-6"><label for="edit_name">姓名</label><input id="edit_name" name="name" class="form-control"></div>
+
+        <div class="col-md-6"><label for="edit_permission">職稱</label><select id="edit_permission" name="permission" class="form-select">
+            <option value="nurse">護理師</option><option value="snurse">專科護理師</option>
+            <option value="student">護生</option><option value="teacher">教師</option><option value="ta">管理員</option></select></div>
+        <div class="col-md-4"><label for="edit_gender">性別</label><select id="edit_gender" name="gender" class="form-select">
+            <option value="Male">男</option><option value="Female">女</option></select></div>
+
+        <div class="col-md-4"><label for="edit_facility_type">目前所在單位類型</label><select id="edit_facility_type" name="facility_type" class="form-select">
+            <option value="">請選擇</option><option value="1">醫學中心</option><option value="2">區域醫院</option>
+            <option value="3">地區醫院</option><option value="4">學校</option></select></div>
+
+        <div class="col-md-4"><label for="edit_birth_date">出生年月日</label><input type="date" id="edit_birth_date" name="birth_date" class="form-control"></div>
+        <div class="col-md-4"><label for="edit_graduate_year">護理科系畢業年份(西元年)</label><input type="number" id="edit_graduate_year" name="graduate_year" class="form-control"></div>
+        <div class="col-md-4"><label for="edit_education_level">教育程度</label><select id="edit_education_level" name="education_level" class="form-select">
+            <option value="">請選</option><option value="1">專科</option><option value="2">大學</option><option value="3">碩士</option><option value="4">博士</option></select></div>
+        <div class="col-md-4"><label for="edit_marital_status">婚姻狀況</label><select id="edit_marital_status" name="marital_status" class="form-select">
+            <option value="">請選</option><option value="1">未婚</option><option value="2">同居</option><option value="3">已婚</option>
+            <option value="4">分居</option><option value="5">離婚</option><option value="6">喪偶</option></select></div>
+        <div class="col-md-4"><label for="edit_hire_date">本院到職日</label><input type="date" id="edit_hire_date" name="hire_date" class="form-control"></div>
+
+        <!-- 部門 & 其他 -->
+        <div class="col-md-4"><label for="edit_department">服務單位的部門</label><select id="edit_department" name="department" class="form-select">
+            <option value="">請選</option><option value="1">內科</option><option value="2">外科</option><option value="3">骨科</option><option value="4">泌尿科</option>
+            <option value="5">皮膚科</option><option value="6">眼科</option><option value="7">耳鼻喉科</option><option value="8">婦產科</option>
+            <option value="9">兒科</option><option value="10">ICU</option><option value="11">ER</option><option value="12">OR</option><option value="13">其他</option></select></div>
+        <div class="col-md-4"><label for="edit_department_other">若選其他，請填寫</label><input id="edit_department_other" name="department_other" class="form-control" disabled></div>
+
+        <!-- 其他醫院 / 急重症 -->
+        <div class="col-md-4"><label for="edit_other_hospital_experience">是否曾在其他醫院服務</label><select id="edit_other_hospital_experience" name="other_hospital_experience" class="form-select">
+            <option value="0">否</option><option value="1">是</option></select></div>
+        <div class="col-md-4"><label for="edit_other_hospital_years">在其他醫院年資(年)</label><input type="number" id="edit_other_hospital_years" name="other_hospital_years" class="form-control" disabled></div>
+
+        <div class="col-md-4"><label for="edit_critical_care_experience">是否有急重症單位經驗</label><select id="edit_critical_care_experience" name="critical_care_experience" class="form-select">
+            <option value="0">否</option><option value="1">是</option></select></div>
+        <div class="col-md-4"><label for="edit_critical_care_years">在急重症單位年資(年)</label><input type="number" id="edit_critical_care_years" name="critical_care_years" class="form-control" disabled></div>
+
+        <!-- BLS / ACLS -->
+        <div class="col-md-4"><label for="edit_bls_training_date">BLS 證書日期</label><input type="date" id="edit_bls_training_date" name="bls_training_date" class="form-control"></div>
+        <div class="col-md-4"><label for="edit_acls_experience">是否參加 ACLS 急救訓練</label><select id="edit_acls_experience" name="acls_experience" class="form-select">
+            <option value="0">否</option><option value="1">是</option></select></div>
+        <div class="col-md-4"><label for="edit_acls_training_date">ACLS 證書日期</label><input type="date" id="edit_acls_training_date" name="acls_training_date" class="form-control" disabled></div>
+
+        <div class="col-md-4"><label for="edit_rescue_count">參與急救次數</label><input type="number" id="edit_rescue_count" name="rescue_count" class="form-control"></div>
+        <div class="col-md-4"><label for="edit_last_rescue_date">上次參加急救的時間(年/月)</label><input type="month" id="edit_last_rescue_date" name="last_rescue_date" class="form-control"></div>
+        <div class="col-md-4"><label for="edit_rescue_course_count">參與急救相關課程次數</label><input type="number" id="edit_rescue_course_count" name="rescue_course_count" class="form-control"></div>
+        <div class="col-md-4"><label for="edit_case_record_date">收案日期</label><input type="date" id="edit_case_record_date" name="case_record_date" class="form-control"></div>
+
+        <div class="col-md-4"><label for="edit_group_assignment">分組</label><select id="edit_group_assignment" name="group_assignment" class="form-select">
+            <option value="">請選</option><option value="1">實驗組-1</option><option value="2">實驗組-2</option><option value="3">實驗組-3</option>
+            <option value="4">實驗組-4</option><option value="5">實驗組-5</option><option value="6">實驗組-6</option><option value="7">對照組</option></select></div>
+        </div></div>
+        <div class="modal-footer"><button class="btn btn-secondary" data-bs-dismiss="modal">取消</button><button type="submit" class="btn btn-primary">儲存變更</button></div>
+        </form></div></div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" 
+                integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" 
+                crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script src="../JS/config.js"></script>
+        <script src="../JS/common.js"></script>
+        <script src="../JS/navbar.js"></script>
+        <script src="../JS/manage.js"></script>
+        <script>
+            // 初始化導航欄
+            document.addEventListener('DOMContentLoaded', function() {
+                initNavbar({ currentPage: 'manage.html' });
+            });
+        </script>
+    </body>
+</html>

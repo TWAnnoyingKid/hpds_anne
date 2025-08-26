@@ -1,0 +1,46 @@
+@import url('./base.css');
+
+/* get 特定樣式 */
+.inputField {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    font-size: 1.2em;
+}
+#enterScoreButton, #deleteSelected {
+    padding: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+#enterScoreButton:hover, #deleteSelected:hover {
+    background-color: #0056b3;
+}
+#errorMessage {
+    color: red;
+    display: none;
+}
+#studentData {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    display: none;
+    text-align: left;
+}
+#studentData table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+#studentData th, #studentData td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+#studentData th {
+    background-color: #4CAF50;
+    color: white;
+}

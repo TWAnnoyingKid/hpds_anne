@@ -1,0 +1,29 @@
+# 環境配置檔案（包含敏感資訊）
+PHP/config.env
+PHP/.env
+.env
+
+# 日誌檔案
+*.log
+logs/
+
+# 暫存檔案
+*.tmp
+*.temp
+
+# 備份檔案
+*.bak
+*.backup
+
+# 編輯器檔案
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 作業系統檔案
+.DS_Store
+Thumbs.db
+
+# PHP 快取檔案
+*.cache

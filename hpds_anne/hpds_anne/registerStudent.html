@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>學生註冊</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../CSS/registerStudent.css">
+</head>
+<body>
+    <h1>學生註冊</h1>
+    <input type="text" id="studentIdInput" class="inputField" placeholder="輸入學號">
+    <input type="password" id="passwordInput" class="inputField" placeholder="輸入密碼">
+    <input type="text" id="nameInput" class="inputField" placeholder="輸入姓名">
+    <select id="permissionSelect" class="selectField">
+        <option value="student">student</option>
+        <option value="ta">ta</option>
+    </select>
+	<select id="genderSelect" class="selectField" required>
+		<option value="Male">Male</option>
+		<option value="Female">Female</option>
+	</select>
+    <button id="registerButton">註冊</button>
+    <div id="errorMessage"></div>
+    <div id="successMessage"></div>
+
+    <script src="../JS/common.js"></script>
+    <script src="../JS/registerStudent.js"></script>
+</body>
+</html>

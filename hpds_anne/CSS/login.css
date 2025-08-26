@@ -1,0 +1,16 @@
+body {
+    /* background: url('bg.jpg') center/cover no-repeat; */
+    height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+  }
+  #loginCard {
+    backdrop-filter: blur(10px);
+    background-color: rgba(255,255,255,0.75);
+    padding: 2rem;
+    border-radius: .5rem;
+    width: 100%; max-width: 400px;
+  }
+  #loginCard .logo {
+    width: 120px; margin: 0 auto 1rem;
+    display: block;
+  }

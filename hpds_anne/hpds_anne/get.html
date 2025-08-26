@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>查詢學號數據</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../CSS/get.css">
+</head>
+<body>
+    <div class="nav-bar">
+        <button class="nav-button" onclick="location.href='manage.html'">用戶管理</button>
+        <button class="nav-button" onclick="location.href='get.html'">數據查詢</button>
+        <button class="nav-button" onclick="location.href='index.html'">首頁</button>
+    </div>
+    <h1>查詢學號數據</h1>
+    <input type="text" id="studentIdInput" class="inputField" placeholder="輸入學號">
+    <input type="password" id="passwordInput" class="inputField" placeholder="輸入密碼">
+    <button id="enterScoreButton">查詢</button>
+    <div id="errorMessage"></div>
+    <div id="studentData">
+        <table>
+            <thead>
+                <tr>
+                    <th>學號</th>
+                    <th>姓名</th>
+                    <th>性別</th>
+                    <th>分數</th>
+                    <th>答錯題目</th>
+                    <th>答題時間</th>
+                    <th>答題日期</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script src="../JS/config.js"></script>
+    <script src="../JS/common.js"></script>
+    <script src="../JS/get.js"></script>
+</body>
+</html>

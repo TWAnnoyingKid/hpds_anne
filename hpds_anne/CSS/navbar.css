@@ -1,0 +1,60 @@
+/* navbar.css - 導航欄元件樣式 */
+
+/* 確保內容不被固定導航欄遮蓋 */
+body {
+    padding-top: 4.5rem;
+}
+
+/* 導航欄樣式 */
+.navbar {
+    z-index: 1030;
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+/* 導航項目樣式 */
+.navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 0.8) !important;
+    transition: color 0.15s ease-in-out;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+    color: rgba(255, 255, 255, 1) !important;
+}
+
+/* 用戶資訊區域 */
+.navbar-text {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* 按鈕樣式 */
+.btn-outline-light {
+    border-color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.btn-outline-light:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.75);
+    color: #fff;
+}
+
+/* 響應式調整 */
+@media (max-width: 991.98px) {
+    .navbar-nav {
+        margin-top: 0.5rem;
+    }
+    
+    .navbar-nav .nav-item {
+        margin-bottom: 0.25rem;
+    }
+    
+    .navbar-nav.ms-auto {
+        margin-top: 0.5rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        padding-top: 0.5rem;
+    }
+}

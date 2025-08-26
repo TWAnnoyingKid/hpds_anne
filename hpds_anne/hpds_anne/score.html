@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>急救訓練管理平台｜成績查看</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
+          rel="stylesheet" 
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" 
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="../CSS/navbar.css">
+    <link rel="stylesheet" href="../CSS/manage.css">
+    <link rel="stylesheet" href="../CSS/score.css">
+</head>
+<body>
+    <!-- 導航欄將由 navbar.js 動態載入 -->
+
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <div class="col-12">
+                <!-- 成績查看區塊 -->
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">我的成績</h5>
+                        <div>
+                            <button id="toggleSortBtn" class="btn btn-sm btn-secondary me-2">成績降序</button>
+                            <button id="refreshBtn" class="btn btn-sm btn-secondary">重新整理</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead class="table-primary">
+                                    <tr>
+                                        <th>學號</th>
+                                        <th>分數</th>
+                                        <th>錯題</th>
+                                        <th>用時</th>
+                                        <th>答題日期</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="scoreTableBody"></tbody>
+                            </table>
+                        </div>
+                        <div id="noScoreMessage" class="text-center text-muted py-4" style="display:none;">
+                            <p>目前沒有成績記錄</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 編輯個人資訊 Modal -->
+    <div class="modal fade" id="personalInfoModal" tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">編輯個人資訊</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="personalInfoForm">
+                    <div class="modal-body">
+                        <div class="row g-3">
+                            <input type="hidden" id="personal_student_id" name="student_id">
+                            
+                            <div class="col-md-6">
+                                <label for="personal_student_id_display">學號</label>
+                                <input id="personal_student_id_display" class="form-control" disabled readonly>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label for="personal_permission_display">職稱</label>
+                                <input id="personal_permission_display" class="form-control" disabled readonly>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label for="personal_name">姓名</label>
+                                <input id="personal_name" name="name" class="form-control" required>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label for="personal_password">密碼</label>
+                                <input id="personal_password" name="password" type="text" class="form-control" placeholder="留空則不修改">
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label for="personal_gender">性別</label>
+                                <select id="personal_gender" name="gender" class="form-select">
+                                    <option value="Male">男</option>
+                                    <option value="Female">女</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label for="personal_birth_date">出生年月日</label>
+                                <input type="date" id="personal_birth_date" name="birth_date" class="form-control">
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label for="personal_graduate_year">護理科系畢業年份(西元年)</label>
+                                <input type="number" id="personal_graduate_year" name="graduate_year" class="form-control">
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label for="personal_education_level">教育程度</label>
+                                <select id="personal_education_level" name="education_level" class="form-select">
+                                    <option value="">請選</option>
+                                    <option value="1">專科</option>
+                                    <option value="2">大學</option>
+                                    <option value="3">碩士</option>
+                                    <option value="4">博士</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label for="personal_marital_status">婚姻狀況</label>
+                                <select id="personal_marital_status" name="marital_status" class="form-select">
+                                    <option value="">請選</option>
+                                    <option value="1">未婚</option>
+                                    <option value="2">同居</option>
+                                    <option value="3">已婚</option>
+                                    <option value="4">分居</option>
+                                    <option value="5">離婚</option>
+                                    <option value="6">喪偶</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label for="personal_hire_date">本院到職日</label>
+                                <input type="date" id="personal_hire_date" name="hire_date" class="form-control">
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label for="personal_facility_type">目前所在單位類型</label>
+                                <select id="personal_facility_type" name="facility_type" class="form-select">
+                                    <option value="">請選擇</option>
+                                    <option value="1">醫學中心</option>
+                                    <option value="2">區域醫院</option>
+                                    <option value="3">地區醫院</option>
+                                    <option value="4">學校</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label for="personal_department">服務單位的部門</label>
+                                <select id="personal_department" name="department" class="form-select">
+                                    <option value="">請選</option>
+                                    <option value="1">內科</option>
+                                    <option value="2">外科</option>
+                                    <option value="3">骨科</option>
+                                    <option value="4">泌尿科</option>
+                                    <option value="5">皮膚科</option>
+                                    <option value="6">眼科</option>
+                                    <option value="7">耳鼻喉科</option>
+                                    <option value="8">婦產科</option>
+                                    <option value="9">兒科</option>
+                                    <option value="10">ICU</option>
+                                    <option value="11">ER</option>
+                                    <option value="12">OR</option>
+                                    <option value="13">其他</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label for="personal_department_other">若選其他，請填寫</label>
+                                <input id="personal_department_other" name="department_other" class="form-control" disabled>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label for="personal_other_hospital_experience">是否曾在其他醫院服務</label>
+                                <select id="personal_other_hospital_experience" name="other_hospital_experience" class="form-select">
+                                    <option value="0">否</option>
+                                    <option value="1">是</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label for="personal_other_hospital_years">在其他醫院年資(年)</label>
+                                <input type="number" id="personal_other_hospital_years" name="other_hospital_years" class="form-control" disabled>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label for="personal_critical_care_experience">是否有急重症單位經驗</label>
+                                <select id="personal_critical_care_experience" name="critical_care_experience" class="form-select">
+                                    <option value="0">否</option>
+                                    <option value="1">是</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label for="personal_critical_care_years">在急重症單位年資(年)</label>
+                                <input type="number" id="personal_critical_care_years" name="critical_care_years" class="form-control" disabled>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label for="personal_bls_training_date">BLS 證書日期</label>
+                                <input type="date" id="personal_bls_training_date" name="bls_training_date" class="form-control">
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label for="personal_acls_experience">是否參加 ACLS 急救訓練</label>
+                                <select id="personal_acls_experience" name="acls_experience" class="form-select">
+                                    <option value="0">否</option>
+                                    <option value="1">是</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label for="personal_acls_training_date">ACLS 證書日期</label>
+                                <input type="date" id="personal_acls_training_date" name="acls_training_date" class="form-control" disabled>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label for="personal_rescue_count">參與急救次數</label>
+                                <input type="number" id="personal_rescue_count" name="rescue_count" class="form-control">
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label for="personal_last_rescue_date">上次參加急救的時間(年/月)</label>
+                                <input type="month" id="personal_last_rescue_date" name="last_rescue_date" class="form-control">
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label for="personal_rescue_course_count">參與急救相關課程次數</label>
+                                <input type="number" id="personal_rescue_course_count" name="rescue_course_count" class="form-control">
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label for="personal_case_record_date">收案日期</label>
+                                <input type="date" id="personal_case_record_date" name="case_record_date" class="form-control">
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label for="personal_group_assignment">分組</label>
+                                <select id="personal_group_assignment" name="group_assignment" class="form-select">
+                                    <option value="">請選</option>
+                                    <option value="1">實驗組-1</option>
+                                    <option value="2">實驗組-2</option>
+                                    <option value="3">實驗組-3</option>
+                                    <option value="4">實驗組-4</option>
+                                    <option value="5">實驗組-5</option>
+                                    <option value="6">實驗組-6</option>
+                                    <option value="7">對照組</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                        <button type="submit" class="btn btn-primary">儲存變更</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" 
+            integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" 
+            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="../JS/config.js"></script>
+    <script src="../JS/common.js"></script>
+    <script src="../JS/navbar.js"></script>
+    <script src="../JS/score.js"></script>
+    <script>
+        // 初始化導航欄
+        document.addEventListener('DOMContentLoaded', function() {
+            initNavbar({ 
+                currentPage: 'score.html',
+                isPersonalPage: true 
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!-- navbar.html - 統一導航欄元件 -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand fw-bold" href="#">急救訓練管理平台</a>
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="nav" class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto" id="navItems">
+                <!-- 導航項目將由 JavaScript 動態生成 -->
+            </ul>
+            <div class="navbar-nav ms-auto">
+                <span id="currentUser" class="navbar-text me-3" style="display: none;"></span>
+                <button id="editPersonalInfoBtn" class="btn btn-outline-light me-2" style="display: none;">編輯個人資訊</button>
+                <button id="logoutBtn" class="btn btn-outline-light">登出</button>
+            </div>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,76 @@
+body{padding-top:4.5rem}
+#mainContainer{max-width:1200px;margin:auto;padding:1rem}
+
+body {
+    padding-top: 0;
+}
+.navbar {
+    margin-bottom: 0;
+}
+
+/* 新增用戶區塊動畫 */
+.add-user-section {
+    overflow: hidden;
+    transition: all 0.4s ease-in-out;
+    max-height: 0;
+    opacity: 0;
+}
+
+.add-user-section.show {
+    max-height: 300px;
+    opacity: 1;
+}
+
+/* 按鈕動畫效果 */
+#toggleAddForm, #toggleSearchForm {
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+#toggleAddForm:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,123,255,0.3);
+}
+
+#toggleSearchForm:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(23,162,184,0.3);
+}
+
+#toggleAddForm.active {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+#toggleSearchForm.active {
+    background-color: #138496;
+    border-color: #117a8b;
+}
+
+/* 表單區塊樣式 */
+.add-user-section .border {
+    border-color: #dee2e6 !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* 密碼顯示樣式 */
+.password-text {
+    display: flex;
+    align-items: center;
+}
+
+.password-text .toggle-password {
+    border: none;
+    background: none;
+    color: #6c757d;
+    padding: 0;
+    margin-left: 5px;
+}
+
+.password-text .toggle-password:hover {
+    color: #0d6efd;
+}
+
+.password-value {
+    font-family: monospace;
+}

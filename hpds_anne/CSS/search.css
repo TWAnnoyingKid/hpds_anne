@@ -1,0 +1,5 @@
+body { padding-top: 4.5rem; }
+#mainContainer { max-width: 95%; margin: auto; padding: 1rem; }
+table th, table td { text-align: center; vertical-align: middle; }
+.text-success { font-size: 1.2em; }
+.text-danger  { font-size: 1.2em; }

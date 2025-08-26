@@ -1,0 +1,21 @@
+body { padding-top: 4.5rem; }
+#mainContainer { max-width:95%; margin:auto; padding:1rem; }
+.text-success { font-size: 1.2em; }
+.text-danger  { font-size: 1.2em; }
+table th, table td { text-align:center; vertical-align:middle; }
+
+/* 搜尋區域樣式 */
+.row.mb-3 {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #dee2e6;
+}
+
+#searchPermission {
+    font-size: 14px;
+}
+
+#searchBtn, #clearSearchBtn {
+    height: 38px;
+}
