@@ -248,9 +248,21 @@ function exportScoresToCsv($sqlQuery, $params, $filename, $sortMode = 0) {
 
 //回應 JSON 格式
 function jsonResponse($data, $httpCode = 200) {
+    // 清理輸出緩衝區，確保沒有意外的輸出
+    if (ob_get_length()) {
+        ob_clean();
+    }
+    
     http_response_code($httpCode);
     header('Content-Type: application/json; charset=UTF-8');
-    echo json_encode($data);
+    
+    $json = json_encode($data);
+    if ($json === false) {
+        // JSON 編碼失敗
+        $json = json_encode(['success' => false, 'error' => 'JSON 編碼失敗: ' . json_last_error_msg()]);
+    }
+    
+    echo $json;
     exit;
 }
 

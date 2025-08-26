@@ -204,20 +204,36 @@ $(function(){
     $('#addBtn').on('click',()=>{
      const sid=$('#new_id').val().trim(), nm=$('#new_name').val().trim(), pwd=$('#new_password').val().trim();
      if(!sid||!nm||!pwd)return alert('學號 / 姓名 / 密碼必填');
+     
      $.post(API_CONFIG.getUrl('manage'),{
       action:'add',student_id:sid,name:encodeB64Utf8(nm),password:pwd,
       permission:$('#new_permission').val(),gender:$('#new_gender').val()
-     },r=>{
-        if(r.success) {
+     }).done(function(r) {
+        // 確保收到的是有效的回應
+        if (typeof r === 'string') {
+            try {
+                r = JSON.parse(r);
+            } catch (e) {
+                console.error('JSON 解析失敗:', e, '原始回應:', r);
+                alert('伺服器回應格式錯誤');
+                return;
+            }
+        }
+        
+        if(r && r.success) {
             fetchUsers();
             $('#addForm')[0].reset();
             // 新增成功後自動隱藏表單
             $('#dynamicFormSection').removeClass('show');
             $('#toggleAddForm').removeClass('active').html('➕ 新增用戶');
+            alert('新增用戶成功');
         } else {
-            alert(r.message);
+            const errorMsg = r ? (r.error || r.message || '新增用戶失敗') : '新增用戶失敗';
+            alert(errorMsg);
         }
-     },'json').fail(xhr=>handleAjaxError(xhr, '新增用戶失敗'));
+     }).fail(function(xhr) {
+        handleAjaxError(xhr, '新增用戶失敗');
+     });
     });
     
     $('#userTable').on('click','.delBtn',function(){

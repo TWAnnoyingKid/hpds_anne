@@ -165,7 +165,9 @@ function handleAjaxError(xhr, defaultMessage = '伺服器連線異常') {
     try {
         responseData = JSON.parse(xhr.responseText);
     } catch (e) {
-        // 如果不是 JSON 格式，忽略解析錯誤
+        // 如果不是 JSON 格式，記錄詳細錯誤
+        console.error('JSON 解析失敗:', e);
+        console.error('原始回應內容:', xhr.responseText);
     }
     
     // 處理特定的 HTTP 狀態碼
@@ -182,6 +184,19 @@ function handleAjaxError(xhr, defaultMessage = '伺服器連線異常') {
         }
     } else if (xhr.status === 0) {
         showError('網路連線中斷，請檢查網路狀態');
+    } else if (xhr.status === 200) {
+        // HTTP 200 但 JSON 解析失敗的情況
+        if (!responseData) {
+            showError('伺服器回應格式錯誤，請檢查伺服器設定');
+            console.error('HTTP 200 但收到無效的 JSON 回應:', xhr.responseText);
+        } else {
+            // 如果能解析 JSON，檢查是否有錯誤訊息
+            if (responseData.success === false) {
+                showError(responseData.error || responseData.message || defaultMessage);
+            } else {
+                showError('未預期的錯誤，請重試');
+            }
+        }
     } else {
         showError(defaultMessage + ' (錯誤代碼: ' + xhr.status + ')');
     }

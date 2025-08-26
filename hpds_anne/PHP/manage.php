@@ -1,4 +1,9 @@
 <?php
+// 確保不會有意外的輸出影響 JSON 回應
+ob_start();
+error_reporting(E_ERROR | E_PARSE); // 只報告嚴重錯誤
+ini_set('display_errors', '0'); // 關閉錯誤顯示
+
 session_start();
 
 require_once '../PHP/common.php';
